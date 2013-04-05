@@ -1,29 +1,98 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+
     <title>Login in Zonixsoft Test Account </title>
+
+    <link href="skin.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        //Check Credentials by JSON
+        function get_LoginSession() {
+            
+            // Append a "random" number to the query string to prevent caching:
+            $.get("http://59.90.165.44/mpulse/Login",
+           { email: document.getElementById("ItxtName").value, password: document.getElementById("ItxtPassd").value },//Passing User Credential's Parameter
+           function (response) {               
+               if (response) {
+                   // If you don't want to pass any data, you can omit the "data" parameter
+                   var number = response.Response;//Getting Response from JSON
+                   var obj = JSON.parse(number);  //Get All JSON Response Data to Javascript object             
+                    // $("#Result").html(obj.sessionID);
+                  //Getting Session id form the Javascript object which get values from JSON Response
+                   if (obj.sessionID != '0') {
+                     //  window.location = "Home.html"
+                       Hide('LoginCtrl')
+                      Show('WelCtrl')
+                       
+                   }
+                   else {
+                       Hide('LoginCtrl')
+                       Show('ErrCtrl')                       
+                   }
+               }
+               else {
+                   Hide('LoginCtrl');
+                   Show('ErrCtrl');                   
+               }
+           }, "json")  
+            return false;
+        }
+
+
+        $(document).ready(function () {
+            $('#button').click(function () {
+                get_LoginSession();
+            });
+        });
+    </script>
 </head>
-<body style="background-color: #eeeeee; font-family:'adobe-clean', 'HelveticaNeue-Bold', Helvetica, Arial, sans-serif;">
-    <div style="padding: 50px; width: 300px; margin: 0px auto;">
-        <h2 style=" font-weight: 500;">Please Login Here.....</h2>
-        <div>
-            <div id="lblName" style="font-weight: bold; padding: 5px;">
-                 User Name :
+<body>
+   
+    <div id="LoginCtrl" class="MainDiv">
+        
+        
+            <h2>Please Login Here.....</h2>
+            <div>
+                <div id="lblName" class="labletext">
+                      E-Mail :                      
+                </div>
+                <div id="txtName">
+                    <input id="ItxtName" type="email" name="Email" title="Please enter valid email"  required>
+                </div>
+                <div id="lblPassd" class="labletext">
+                    Password :
+                </div>
+                <div id="txtPassd">
+                    <input id="ItxtPassd" type="password" name="Password" title="Enter your password" required >
+                </div>
+                <div class="subbtndiv">
+                    <input id="button" type="submit" value="Submit" class="subbtn" />
+                </div>
             </div>
-            <div id="txtName">
-                <input id="ItxtName" type="text" />                
-            </div>
-            <div id="lblPassd" style="font-weight: bold; padding: 5px;">
-                 Password :
-            </div>
-            <div id="txtPassd">
-                <input id="ItxtPassd" type="text" />                
-            </div>
-            <div style="padding: 20px  0px;">
-                <input id="Subbtn" type="submit" value="Submit" style=" background-color:#209dc2; color: #fff;-moz-border-radius: 5px;
-                -webkit-border-radius: 5px; border-radius:5px; padding: 5px 10px;" />
-            </div>
-        </div>
+        
     </div>
+    <div id="WelCtrl" class="MainDiv" style="display:none;">
+            
+        <h2>Login Successfully.....</h2>
+    </div>
+    <div id="ErrCtrl" class="MainDiv" style="display:none;">
+        <h2>Invalid User.....</h2>
+        <a href="Login.htm">click here for Login Again</a>
+    </div>
+       
 </body>
 </html>
+<script>
+    //Hiding Div
+    function Hide(ID) {        
+        var mess = document.getElementById(ID);
+        mess.style.display = "none";
+    }
+    //Showing Div
+    function Show(ID) {
+        var mess = document.getElementById(ID);
+        mess.style.display = "block";
+    }
+</script>

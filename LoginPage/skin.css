@@ -1,0 +1,33 @@
+﻿body 
+{
+    background-color: #eeeeee; 
+    font-family: 'adobe-clean', 'HelveticaNeue-Bold', Helvetica, Arial, sans-serif;
+}
+.MainDiv
+{
+    padding: 50px; 
+    width: 300px; 
+    margin: 0px auto;
+}
+h2
+{
+    font-weight: 500;
+}
+.labletext
+{
+    font-weight: bold; 
+    padding: 5px;
+}
+.subbtndiv
+{
+    padding: 20px  0px;
+}
+.subbtn
+{
+    background-color: #209dc2;
+    color: #fff; 
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px; 
+    border-radius: 5px;
+    padding: 5px 10px;
+}
